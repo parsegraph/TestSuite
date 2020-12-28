@@ -1,18 +1,21 @@
 DIST_NAME = testsuite
 
 SCRIPT_FILES = \
-	src/index.ts \
+	src/$(DIST_NAME).ts \
 	src/Test.ts \
 	src/TestResult.ts \
-	src/TestSuite.ts \
 	src/TestSuiteResult.ts
+
+DECLARATION_FILES = \
+	dist/$(DIST_NAME).d.ts \
+	dist/$(DIST_NAME).d.ts.map
 
 all: build lint test coverage esdoc
 
-build: dist/$(DIST_NAME).js
+build: dist/$(DIST_NAME).js $(DECLARATION_FILES)
 .PHONY: build
 
-demo: dist/$(DIST_NAME).js
+demo: dist/$(DIST_NAME).js $(DECLARATION_FILES)
 	npm run demo
 .PHONY: demo
 
@@ -44,6 +47,7 @@ doc: esdoc
 
 dist/$(DIST_NAME).js: $(SCRIPT_FILES)
 	npm run build
+	mv dist/src/* dist/
 
 clean:
 	rm -rf dist .nyc_output

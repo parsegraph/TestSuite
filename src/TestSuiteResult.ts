@@ -1,4 +1,13 @@
+import TestResult from "./TestResult";
+
 export default class TestSuiteResult {
+  _testsStarted:number;
+  _testsSuccessful:number;
+  _testsFailed:number;
+  _testsCrashed:number;
+  _aggregateResult:HTMLElement;
+  _resultList:HTMLElement;
+  _container:HTMLElement;
 
   constructor() {
     this._testsStarted = 0;
@@ -7,11 +16,11 @@ export default class TestSuiteResult {
     this._testsCrashed = 0;
 
     this._aggregateResult = document.createElement('h2');
-
+    this._container = null;
     this._resultList = document.createElement('ul');
   }
 
-  connect(container) {
+  connect(container:HTMLElement) {
     this.disconnect();
 
     this._container = container;
@@ -56,7 +65,7 @@ export default class TestSuiteResult {
     return this._testsCrashed;
   };
 
-  testFinished(result) {
+  testFinished(result:TestResult) {
     ++this['_tests' + result.testStatus()];
   };
 

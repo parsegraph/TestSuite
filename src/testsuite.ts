@@ -1,7 +1,8 @@
 import Test from './Test';
 import TestSuiteResult from './TestSuiteResult';
+import TestResult from './TestResult';
 
-let allTests = null;
+let allTests:TestSuite = null;
 export function getAllTests() {
   if(!allTests) {
     allTests = new TestSuite("parsegraph", true);
@@ -11,7 +12,7 @@ export function getAllTests() {
 
 export default class TestSuite {
   _name:string;
-  _tests:Test
+  _tests:Test[];
 
   constructor(name:string, dontAutoadd?:boolean) {
     if (name === undefined) {
@@ -37,9 +38,9 @@ export default class TestSuite {
     );
   };
 
-  addTest(testName, runner, runnerThisArg) {
+  addTest(testName:string|TestSuite, runner?:Function|TestSuite, runnerThisArg?:any) {
     if (typeof testName === 'object') {
-      return this.addTest(testName.name(), testName);
+      return this.addTest((testName as TestSuite).name(), testName);
     }
     if (typeof testName === 'function') {
       return this.addTest(
@@ -53,8 +54,8 @@ export default class TestSuite {
     return test;
   };
 
-  run(listener, listenerThisArg, resultDom, testResults) {
-    const notify = function(...args) {
+  run(listener:Function, listenerThisArg?:any, _?:HTMLElement, testResults?:TestSuiteResult) {
+    const notify = function(...args:any) {
       if (listener) {
         listener.apply(listenerThisArg, args);
       }
@@ -84,10 +85,11 @@ export default class TestSuite {
           );
           resultLine.appendChild(document.createElement('br'));
           resultLine.appendChild(document.createElement('pre'));
-          console.log(result.testResult().stack);
-          resultLine.lastChild.innerHTML = result
-              .testResult()
-              .stack.replace(/[\r\n]+/g, '<br/>');
+
+          const err = result.testResult() as Error;
+          console.log(err.stack);
+          resultLine.lastElementChild.innerHTML =
+            err.stack.replace(/[\r\n]+/g, '<br/>');
           return;
         }
 
@@ -126,12 +128,12 @@ export default class TestSuite {
           );
           resultLine.appendChild(document.createElement('br'));
           resultLine.appendChild(document.createElement('pre'));
-          resultLine.lastChild.innerHTML = result
-              .testResult()
-              .stack.replace(/[\r\n]+/g, '<br/>');
+          const err = result.testResult() as Error;
+          resultLine.lastElementChild.innerHTML =
+            err.stack.replace(/[\r\n]+/g, '<br/>');
         } else if (result.testStatus() !== 'Successful') {
           resultLine.appendChild(document.createElement('br'));
-          resultLine.appendChild(document.createTextNode(result.testResult()));
+          resultLine.appendChild(document.createTextNode(result.testResult().toString()));
         }
 
         if (result.testStatus() === 'Successful') {
@@ -145,3 +147,9 @@ export default class TestSuite {
     return testResults;
   };
 }
+
+export {
+  Test,
+  TestSuiteResult,
+  TestResult,
+};

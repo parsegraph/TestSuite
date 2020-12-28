@@ -1,11 +1,12 @@
 import TestSuiteResult from './TestSuiteResult';
 import TestResult from './TestResult';
+import TestSuite from './testsuite';
 
 export default class Test {
   _name:string;
   _runner:object[];
 
-  constructor(name, runner, runnerThisArg) {
+  constructor(name:string, runner:Function|TestSuite, runnerThisArg?:any) {
     this._name = name;
     this._runner = [runner, runnerThisArg];
   }
@@ -26,16 +27,16 @@ export default class Test {
     return typeof this._runner[0] === 'function';
   };
 
-  run(listener, listenerThisArg, resultDom, suiteResult) {
+  run(listener:Function, listenerThisArg?:any, resultDom?:HTMLElement, suiteResult?:TestSuiteResult):TestResult {
     if (!suiteResult) {
       suiteResult = new TestSuiteResult();
     }
-    let testResult;
-    let testStatus;
+    let testResult:any;
+    let testStatus:string;
     if (this.isTestSuite()) {
       try {
         // The runner is another test or test suite.
-        testResult = this._runner[0].run(
+        testResult = (this._runner[0] as TestSuite).run(
             listener,
             listenerThisArg,
             resultDom,
@@ -58,7 +59,7 @@ export default class Test {
       // The runner is a function.
       testStatus = 'Started';
       try {
-        testResult = this._runner[0].call(
+        testResult = (this._runner[0] as Function).call(
             this._runner[1],
             resultDom,
             suiteResult,
@@ -81,12 +82,5 @@ export default class Test {
     }
 
     return new TestResult(testStatus, testResult, this);
-  };
-
-  test(...args) {
-    if (args.length > 0) {
-      return this.addTest(...args);
-    }
-    return this.run();
   };
 }
