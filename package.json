@@ -1,14 +1,16 @@
 {
   "name": "parsegraph-testsuite",
-  "version": "1.4.2",
+  "version": "1.4.3-dev",
   "description": "Test class",
-  "main": "dist/testsuite.js",
+  "main": "dist/parsegraph-testsuite.js",
+  "types": "dist/parsegraph-testsuite.d.ts",
   "scripts": {
     "coverage": "nyc npm run test",
     "test": "mocha -r @babel/register -r jsdom-global/register --recursive",
     "demo": "node demo/demo.js",
     "autobuild": "webpack --watch --config webpack.config.js",
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.js",
+    "build-prod": "NODE_ENV=production webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",
@@ -31,7 +33,7 @@
     ],
     "reportDir": "dist/coverage"
   },
-  "devDependencies": {
+  "dependencies": {
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.1",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
@@ -57,9 +59,7 @@
     "ts-shader-loader": "^1.0.6",
     "typescript": "^4.0.2",
     "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
-  },
-  "dependencies": {
+    "webpack-cli": "^3.3.12",
     "@atscm/esdoc-typescript-plugin": "^0.1.0",
     "@babel/polyfill": "^7.10.4",
     "@babel/register": "^7.12.1",
