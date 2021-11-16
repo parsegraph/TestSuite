@@ -1,6 +1,6 @@
 {
   "name": "parsegraph-testsuite",
-  "version": "1.4.3-dev",
+  "version": "1.5.0-dev",
   "description": "Test class",
   "main": "dist/parsegraph-testsuite.js",
   "types": "dist/parsegraph-testsuite.d.ts",
