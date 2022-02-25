@@ -14,17 +14,6 @@
     "url": "https://github.com/parsegraph/TestSuite/issues"
   },
   "homepage": "https://github.com/parsegraph/TestSuite#readme",
-  "nyc": {
-    "extends": "@istanbuljs/nyc-config-babel",
-    "reporter": [
-      "html"
-    ],
-    "exclude": [
-      "test/**.js",
-      "dist/**.js"
-    ],
-    "reportDir": "dist/coverage"
-  },
   "dependencies": {
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.1",
