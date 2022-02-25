@@ -1,4 +1,4 @@
-var assert = require("assert");
+const assert = require("assert");
 import TestSuite from "../src/index";
 
 describe("TestSuite", function () {
