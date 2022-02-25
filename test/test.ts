@@ -1,5 +1,5 @@
 var assert = require("assert");
-import TestSuite from "../dist/parsegraph-testsuite";
+import TestSuite from "../src/index";
 
 describe("TestSuite", function () {
   describe("#constructor()", function () {
