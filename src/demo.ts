@@ -1,11 +1,24 @@
-import todo from ".";
+import TestSuite from "./index";
+import { assert } from "chai";
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById("demo");
   root.style.position = "relative";
 
+  const ts = new TestSuite();
+
+  ts.addTest("passes", () => {
+    assert.equal(2 + 2, 4);
+  });
+
+  ts.addTest("fails", () => {
+    assert.equal(2 + 2, 5);
+  });
+
+  const res = ts.run();
+
   const container = document.createElement("div");
-  container.innerHTML = `${todo()}`;
+  container.appendChild(res.aggregateResult());
   container.style.position = "absolute";
   container.style.left = "0px";
   container.style.top = "0px";

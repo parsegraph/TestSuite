@@ -1,6 +1,6 @@
 import TestSuiteResult from "./TestSuiteResult";
 import TestResult from "./TestResult";
-import TestSuite from "./testsuite";
+import TestSuite from "./index";
 
 export default class Test {
   _name: string;
