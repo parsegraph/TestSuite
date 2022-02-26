@@ -12,13 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   ts.addTest("fails", () => {
-    assert.equal(2 + 2, 5);
+    assert.ok(Date.now() % 2 === 0);
   });
 
-  const res = ts.run();
 
   const container = document.createElement("div");
-  container.appendChild(res.aggregateResult());
+  container.innerHTML = "Click to animate";
   container.style.position = "absolute";
   container.style.left = "0px";
   container.style.top = "0px";
@@ -32,6 +31,9 @@ document.addEventListener("DOMContentLoaded", () => {
     container.style.color = `rgb(${rand()}, ${rand()}, ${rand()})`;
     container.style.left = `${Math.random() * root.clientWidth}px`;
     container.style.top = `${Math.random() * root.clientHeight}px`;
+    const res = ts.run();
+    container.innerHTML = "";
+    container.appendChild(res.aggregateResult());
   };
 
   const dot = document.createElement("div");
