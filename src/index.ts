@@ -14,7 +14,7 @@ export default class TestSuite {
   _name: string;
   _tests: Test[];
 
-  constructor(name: string, dontAutoadd?: boolean) {
+  constructor(name?: string, dontAutoadd?: boolean) {
     if (name === undefined) {
       this._name = "Test";
     } else {
@@ -59,7 +59,7 @@ export default class TestSuite {
   }
 
   run(
-    listener: Function,
+    listener?: Function,
     listenerThisArg?: any,
     _?: HTMLElement,
     testResults?: TestSuiteResult
